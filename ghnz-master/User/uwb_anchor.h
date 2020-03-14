@@ -33,10 +33,14 @@ typedef struct
 	uint32_t locCount;          //定位成功次数
 	uint32_t locErrNum;         //定位错误次数
 	uint32_t beaconNum;         //接收信标帧个数
-	uint32_t rxDataNum;           //接收数据帧个数
-	uint32_t sendNum;           //发送的帧个数
-	uint32_t dataNumErr;        //接收数据错误个数
-	uint32_t waitErr;        //等待错误个数
+	uint32_t txBeaNum;          //发送信标帧应答帧个数
+	uint32_t rxPollNum;         //接收数据帧poll个数
+	uint32_t txPollNum;         //发送poll应答帧个数
+	uint32_t rxFinalNum;        //接收final帧个数
+//	uint32_t sendNum;           //发送的帧个数
+//	uint32_t dataNumErr;        //接收数据错误个数
+	uint32_t idErr;
+	uint32_t waitErr;           //等待错误个数
 }sAncDevInfo;
 
 typedef struct
@@ -51,8 +55,12 @@ typedef struct
 
 
 typedef enum{
-	UWB_DATA_STATE =0,
-	UWB_LOCATION_STATE
+	UWB_WAIT_STATE = 0,  //
+	UWB_RX_BEA_STATE,
+	UWB_RES_BEA_STATE,
+	UWB_RX_POLL_STATE,
+	UWB_RES_POLL_STATE,
+	UWB_RX_FINAL_STATE,
 }UWB_DEV_STATE;
 
 #define FRAME_CTRL_BYTE_ADDR_LEN_BIT						0x4400    //MAC 帧控制段中地址长度位
@@ -63,8 +71,15 @@ typedef enum{
 #define FINAL_MSG_FINAL_TX_TS_IDX             		(FINAL_MSG_RESP_RX_TS_IDX +  FINAL_MSG_TS_LEN) //finally消息中，FINAL发送时间戳索引
 
 #define ANC_LOC_TAG_MAX									10	//基站能同时容纳的标签量
-#define ANC_TOF_REC_MAX									20		//标签在一个通讯周期内与同一基站的通讯次数
+#define ANC_TOF_REC_MAX									10		//标签在一个通讯周期内与同一基站的通讯次数
 #define ANC_TOF_MIN_DATA                 5
+
+typedef struct
+{
+	uint16_t lengId;
+	uint32_t count;
+}sTimeData;
+
 
 typedef struct
 {
@@ -74,6 +89,7 @@ typedef struct
 	uint16_t heartCout;           			//心跳计数
 	uint16_t oldHeartCout;           		//旧的心跳计数
 	uint8_t  commCnt;							      //单周期内标签与同一基站的通讯次数
+	uint8_t  wr;                        //写标签id
 	uint8_t  mark;
 	uint8_t  maxPtr;                      //最大值指针
 	uint8_t  minPtr;	                   //最小值指针
@@ -99,4 +115,6 @@ void UwbAnchorTask(void *pdata);
 sDistList_N * GetDistBufPoint(void);
 void DistBufDataCount(sDistNote * data);
 void DelDistBufData(sDistList_N * before, sDistList_N * del);
+
+void UwbAnchorIrqTask(void *pdata);
 #endif /*__UWB_ANCHOR_H__*/

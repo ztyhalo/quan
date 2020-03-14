@@ -154,7 +154,8 @@ void DwtWriteTxData(uint8_t * data, uint16_t len)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 //	port_DisableEXT_IRQ();
-	OSSemPost(gDw1000Sem);
+//	OSSemPost(gDw1000Sem);
+	dwt_isr();
 }
 
 void Dw1000ProcPend(uint16_t timeout, INT8U *perr)

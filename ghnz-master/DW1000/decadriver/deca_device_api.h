@@ -286,6 +286,7 @@ typedef struct
     dwt_cb_t    cbRxOk;             // Callback for RX good frame event
     dwt_cb_t    cbRxTo;             // Callback for RX timeout events
     dwt_cb_t    cbRxErr;            // Callback for RX error events
+		dwt_cb_t    cbElseErr;          // callback for ELSE error events
 } DWT_LocalData_s ;
 
 
@@ -1040,7 +1041,7 @@ int dwt_spicswakeup(uint8 *buff, uint16 length);
  *
  * no return value
  */
-void dwt_setcallbacks(dwt_cb_t cbTxDone, dwt_cb_t cbRxOk, dwt_cb_t cbRxTo, dwt_cb_t cbRxErr);
+void dwt_setcallbacks(dwt_cb_t cbTxDone, dwt_cb_t cbRxOk, dwt_cb_t cbRxTo, dwt_cb_t cbRxErr, dwt_cb_t cbElErr);
 
 /*! ------------------------------------------------------------------------------------------------------------------
  * @fn dwt_checkirq()

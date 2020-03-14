@@ -431,7 +431,7 @@ void UwbAppTask(void *p_arg)
 	{
 		UpdateDataProcess();
 //		PollCheckTagOffLine();
-		OSTimeDly(1000);
+		OSTimeDly(250);
 	}
 
 }

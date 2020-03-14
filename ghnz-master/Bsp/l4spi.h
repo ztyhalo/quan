@@ -40,6 +40,11 @@
 //#define SPIx_MISO					  GPIO_Pin_6
 //#define SPIx_MOSI					  GPIO_Pin_7
 //#define SPI_I2S_FLAG_RXNE   SPI_FLAG_RXNE
+#define SPI_NORMAL_MODE       0
+#define SPI_INT_MODE          1
+
+#define SPI_MODE             SPI_NORMAL_MODE
+
 #define ZSPIx                             SPI1
 #define SPIx_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
 #define SPIx_SCK_GPIO_CLK_ENABLE()       __HAL_RCC_GPIOA_CLK_ENABLE()

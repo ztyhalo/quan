@@ -2122,12 +2122,13 @@ void DWT_SetRxAfterTxDelay(uint32 rxDelayTime)
  *
  * no return value
  */
-void dwt_setcallbacks(dwt_cb_t cbTxDone, dwt_cb_t cbRxOk, dwt_cb_t cbRxTo, dwt_cb_t cbRxErr)
+void dwt_setcallbacks(dwt_cb_t cbTxDone, dwt_cb_t cbRxOk, dwt_cb_t cbRxTo, dwt_cb_t cbRxErr, dwt_cb_t cbElErr)
 {
     pdw1000local->cbTxDone = cbTxDone;
     pdw1000local->cbRxOk = cbRxOk;
     pdw1000local->cbRxTo = cbRxTo;
     pdw1000local->cbRxErr = cbRxErr;
+	  pdw1000local->cbElseErr = cbElErr;
 }
 
 /*! ------------------------------------------------------------------------------------------------------------------

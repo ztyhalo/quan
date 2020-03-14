@@ -34,6 +34,7 @@
 /*** 0、1、2、3预留给uc/os系统***************/
 //#define	 CANRX_TASK_PRIO												 4u      /* can receive  task                        */
 #define  UWBRX_TASK_PRIO                   			   5u	    /*uwb接收任务优先级最高                        */
+//#define  UWB_DEBUG_TASK_PRIO                   		 5u	    /*uwb调试任务优先级                       */
 #define  UWB_ANCHOR_TASK_PRIO                      6u
 #define  UWB_TAG_TASK_PRIO                         7u
 //#define  TAG_REPORT_TAST_PRIO                    8u

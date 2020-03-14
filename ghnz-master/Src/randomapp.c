@@ -1,3 +1,4 @@
+
 #include "randomapp.h"
 
 RNG_HandleTypeDef sRngHandle;

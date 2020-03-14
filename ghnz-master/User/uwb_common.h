@@ -25,9 +25,9 @@
 
 
 #define FRAME_COMM_DEC_RX_TO_RESP_TX_DLY_UUS			300			//通讯声明帧接收完成到发送回复帧延迟时间
-#define POLL_RX_TO_RESP_TX_DLY_UUS          			300  	  //POLL接收完成到开始发送RESP延迟时间
+#define POLL_RX_TO_RESP_TX_DLY_UUS          			600	  //POLL接收完成到开始发送RESP延迟时间
 #define RESP_TX_TO_FINAL_RX_DLY_UUS         			150   //RESP发送完成到开始接收FINAL延迟时间
-#define FINAL_RX_TIMEOUT_UUS                			700  	//FINAL接收超时时间
+#define FINAL_RX_TIMEOUT_UUS                			3000  	//FINAL接收超时时间
 
 
 /*定位帧格式*/

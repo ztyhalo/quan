@@ -261,8 +261,8 @@ void Error_Handler(void);
 
 #define POLL_RX_TIMEOUT_UUS									1000	//POLL接收超时时间
 
-#define RESP_TX_TO_FINAL_RX_DLY_UUS         150   //RESP发送完成到开始接收FINAL延迟时间
-#define FINAL_RX_TIMEOUT_UUS                700  	//FINAL接收超时时间
+//#define RESP_TX_TO_FINAL_RX_DLY_UUS         150   //RESP发送完成到开始接收FINAL延迟时间
+//#define FINAL_RX_TIMEOUT_UUS                700  	//FINAL接收超时时间
 
 #define LISTEN_CHANNEL_TIME									200		//信道监听时间200us
 

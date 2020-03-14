@@ -63,11 +63,10 @@ void SpiGpioInit(void)
     GPIO_InitStruct.Alternate = SPIx_MOSI_AF;
     HAL_GPIO_Init(SPIx_MOSI_GPIO_PORT, &GPIO_InitStruct);
 
-    /*##-3- Configure the NVIC for SPI #########################################*/
-    /* NVIC for SPI */
+#if SPI_MODE == SPI_INT_MODE
     HAL_NVIC_SetPriority(SPIx_IRQn, 1, 0);
     HAL_NVIC_EnableIRQ(SPIx_IRQn);
-		
+#endif 		/* SPI_MODE == SPI_INT_MODE*/
 }
 
 /* SPI1 init function */
@@ -143,8 +142,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 	
 	  /*##-3- Configure the NVIC for SPI #########################################*/
     /* NVIC for SPI */
+#if SPI_MODE == SPI_INT_MODE
     HAL_NVIC_SetPriority(SPIx_IRQn, SPI_IRQ_PRIO,  0);
     HAL_NVIC_EnableIRQ(SPIx_IRQn);
+#endif 		/* SPI_MODE == SPI_INT_MODE*/
 }
 
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
@@ -206,10 +207,8 @@ void SPI_Config(uint32_t speed)
 * 出口参数：无
 * 使用说明：无
 ********************************************************************************************/
-//void CANx_RX_IRQHandler(void)
-//{
-//  HAL_CAN_IRQHandler(&CanHandle);
-//}
+
+#if SPI_MODE == SPI_INT_MODE
 static void SPI_2linesRxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
 {
   /* Receive data in packing mode */
@@ -403,6 +402,7 @@ void SPIx_IRQHandler(void)
 {
   Z_SPIx_IRQHandler(&hspi1);
 }
+#endif /*SPI_MODE == SPI_INT_MODE*/
 
 
 

@@ -192,7 +192,7 @@ void TaskStart(void *pdata)
 
 #elif DECA_WORK_MODE == UWB_ALARM_MODE
 	CanAppInit();         												//初始化can通信并建立收发任务
-	OSTaskCreateExt(UwbAnchorTask,
+	OSTaskCreateExt(UwbAnchorIrqTask,
 									(void *)0,
 									(OS_STK *)&UWB_AnchorStk[UWB_ANCHOR_TASK_STK_SIZE - 1],
 									UWB_ANCHOR_TASK_PRIO,
