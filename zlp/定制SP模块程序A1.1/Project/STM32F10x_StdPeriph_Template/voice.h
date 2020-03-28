@@ -1,0 +1,130 @@
+#ifndef     __VOICE_H
+#define    __VOICE_H
+
+#define ADCBUFFER    80//ADC  ˝æ›ª∫≥Â
+#define OFFLINETICK  5000
+#define PLAYALLDELAY 8000
+
+#define  FINITEPLAYLISTDEPTH   60  
+#define  INFINITEPLAYLISTDEPTH   60  
+
+#define BUFFER_EMPTY 1
+#define BUFFER_GETOK 2
+#define BUFFER_RELEASEOK 3
+
+#define STOP_ALLFINITE            0x00
+#define STOP_ALLINFINITE          0x01
+#define STOP_SPCINFINITE          0x02
+
+#define STOP_ACK_OK	        0x00
+#define STOP_ACK_TYPEERR    0x01
+#define CONFIG_ACK_OK       0x00
+#define CONFIG_ACK_TYPEERR  0x01
+#define CONFIG_ACK_OVERFLOW	0x02
+
+/*∆ ºµÿ÷∑Œª”⁄FLASH µ⁄128∏ˆ“≥√Ê£¨√ø∏ˆ“≥√ÊŒ™1K£¨FLASH∆ ºµÿ÷∑Œ™0x08000000*/
+#define EEPROM_START_ADDRESS                ((u32)0x0801FC00)
+#define EEPROM1                             ((u32)(EEPROM_START_ADDRESS + 0x00))     
+#define EEPROM2                             ((u32)(EEPROM_START_ADDRESS + 0x04))
+
+#define MSG_QUEUE_SIZE               100 
+
+typedef struct {
+
+  u8  segaddr;//”Ô“Ù∆¨∂Œ±‡∫≈
+	u8  playtype;//≤•∑≈¿‡–Õ 0Œ™”–œﬁ¥Œ£¨1Œ™Œﬁœﬁ¥Œ≤•∑≈
+	u8  playtimes;//≤•∑≈¥Œ ˝£¨Ωˆ‘⁄≤•∑≈¿‡–ÕŒ™0 ±”––ß
+	u8  playprior;//≤•∑≈”≈œ»º∂
+//  u8  blockvalid;
+//  u8  blockactive;
+  u16 playinterval;//≤•∑≈º‰∏Ù
+}_PlayICB;
+ 
+
+typedef struct _PlayICBBuf{
+
+	u8  segaddr;//”Ô“Ù∆¨∂Œ±‡∫≈
+	u8  playtype;//≤•∑≈¿‡–Õ 0Œ™”–œﬁ¥Œ£¨1Œ™Œﬁœﬁ¥Œ≤•∑≈
+	u8  playtimes;//≤•∑≈¥Œ ˝£¨Ωˆ‘⁄≤•∑≈¿‡–ÕŒ™0 ±”––ß
+	u8  playprior;//≤•∑≈”≈œ»º∂
+	u8  blockvalid;//”Ô“Ù∂Œ”––ß
+//    u8  blockactive;
+    u16  playinterval;//≤•∑≈º‰∏Ù
+    u16  playtick;
+
+	struct _PlayICBBuf *prev;
+	struct _PlayICBBuf *next;
+}_PlayICBBuf;
+
+typedef struct {
+
+	u8 complete;  //ÕÍ≥…◊¥Ã¨	
+	u8 timeinterval;//≤•∑≈º‰∏Ù
+	u8 PlayStatus;//≤•∑≈◊¥Ã¨
+    u8 playtimes;//≤•∑≈¥Œ ˝
+	u8 mode;      //≤•∑≈ƒ£ Ω
+    u8 segaddr;//≤•∑≈∂Œµÿ÷∑
+	u8 allcomplete;//”Ô“Ù∂Œ”––ß
+	u8 blockvalid;//”Ô“Ù∂Œ”––ß
+    u16 fillnum; //
+
+
+}_VM8978Status;
+
+typedef struct
+{
+    u16 VolumePre;
+    u16 VolumeNow;
+}_VolumeCtr;
+
+typedef struct
+{
+    u16 OffLineTimer;
+    u16 PlayIntervalTimer;
+}_SoftTimer;
+
+
+//------------------------
+
+extern _PlayICBBuf PlayIBC[FINITEPLAYLISTDEPTH];//ø’œ–≤•∑≈¡–±Ì
+
+extern _PlayICBBuf *FiniteListHead;//”–œﬁ¥Œ¥˝≤•∑≈¡–±ÌÕ∑÷∏’Î£¨
+extern _PlayICBBuf *FiniteListTail;//”–œﬁ¥Œ¥˝≤•∑≈¡–±ÌŒ≤÷∏’Î
+extern _PlayICBBuf *FiniteListCurPlay;//”–œﬁ¥Œµ±«∞≤•∑≈”Ô“ÙøÈ÷∏’Î
+
+extern _PlayICBBuf FiniteList;//”–œﬁ¥Œ≤•∑≈±‰¡ø
+extern _PlayICBBuf FiniteListBuf;//”–œﬁ¥Œ≤•∑≈±‰¡øª∫¥ÊŒ
+
+extern _PlayICBBuf *InFiniteListHead;//Œﬁœﬁ¥Œ¥˝≤•∑≈¡–±ÌÕ∑÷∏’Î£¨
+extern _PlayICBBuf *InFiniteListTail;//Œﬁœﬁ¥Œ¥˝≤•∑≈¡–±ÌŒ≤÷∏’Î
+extern _PlayICBBuf *InFiniteListCurPlay;//Œﬁœﬁ¥Œµ±«∞≤•∑≈”Ô“ÙøÈ÷∏’Î
+
+
+extern u8 FiniteListNodeNum;//”–œﬁ¥Œª∫≥Â«¯Ω⁄µ„ ˝ƒø
+extern u8 InFiniteListNodeNum;//Œﬁœﬂ¥Œª∫≥Â«¯Ω⁄µ„ ˝ƒø
+extern _VM8978Status VM8978Status;
+extern _SoftTimer SoftTimer;
+extern _VolumeCtr VolumeCtr;
+extern u16 ADCConvertedValue[ADCBUFFER];
+
+extern OS_EVENT *MsgQueue;
+extern void     *MsgQueueTbl[MSG_QUEUE_SIZE];
+//------------------------∫Ø ˝…˘√˜-------------------------------------------------
+void Init_PlayStatus(void);
+void Init_FreeList(void);
+
+u8 PushNode(_PlayICB *pt);
+s8 GetNode(_PlayICBBuf * pt,u8 prior);
+s8 ReleaseNode(_PlayICBBuf * pt);
+u8 DelNode(u16 segmentaddr);
+u8 GetNodeMaxPrior(_PlayICBBuf * pt);
+u8 Del_AllNode(void);
+
+
+void DMAADCInit_Base(void);
+void ADC1Init_Base(void);
+void ADCfliter(u16 *p,u16 num);
+
+
+#endif
+/******************************************end of file*****************************/

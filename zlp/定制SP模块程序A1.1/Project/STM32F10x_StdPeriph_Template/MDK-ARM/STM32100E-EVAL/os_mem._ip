@@ -1,0 +1,5 @@
+..\..\..\OS\uCOS-II\Source\os_mem.c -E -c --cpu Cortex-M3 -D__MICROLIB -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\CM3\CoreSupport -I..\..\..\Libraries\CMSIS\CM3\DeviceSupport\ST\STM32F10x -I..\..\..\Libraries\STM32F10x_StdPeriph_Driver\inc -I..\..\..\OS\uCOS-II\Source -I..\..\..\OS\uCOS-II\Ports -I..\..\..\OS\uCOS-II -I..\..\..\OS\uC-CPU -I..\..\..\Libraries\FATFS\src -I..\..\..\Libraries\SDIO -I..\..\STM32F10x_StdPeriph_Template -I..\..\..\Libraries\FATFS\src\option
+-I C:\Keil\ARM\RV31\INC
+-I C:\Keil\ARM\CMSIS\Include
+-I C:\Keil\ARM\Inc\ST\STM32F10x
+-DUSE_STDPERIPH_DRIVER -DSTM32F10X_HD -o .\stm32100e-eval\os_mem.i --list_dir ".\\STM32100E-EVAL\\" --list
